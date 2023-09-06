@@ -22,3 +22,4 @@ eureka:
     statusPageUrl: https://${eureka.hostname}/info
     healthCheckUrl: https://${eureka.hostname}/health
     homePageUrl: https://${eureka.hostname}/
+    appname: accounts-service

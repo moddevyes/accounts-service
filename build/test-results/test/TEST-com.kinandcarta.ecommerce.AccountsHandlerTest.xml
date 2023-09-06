@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.kinandcarta.ecommerce.AccountsHandlerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-08-31T19:03:25" hostname="2NF0VT3" time="0.622">
+<testsuite name="com.kinandcarta.ecommerce.AccountsHandlerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-09-01T15:00:13" hostname="2NF0VT3" time="0.946">
   <properties/>
-  <testcase name="[1] email=あいうえお@example.com" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.571"/>
-  <testcase name="[2] email=email@example" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.011"/>
-  <testcase name="[3] email=email@example.weber" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.014"/>
-  <testcase name="[4] email=email@111.222.333.44444" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.01"/>
-  <testcase name="[5] email=just”not”right@example.com" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.009"/>
-  <system-out><![CDATA[14:03:25.508 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+  <testcase name="[1] email=あいうえお@example.com" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.889"/>
+  <testcase name="[2] email=email@example" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.012"/>
+  <testcase name="[3] email=email@example.weber" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.016"/>
+  <testcase name="[4] email=email@111.222.333.44444" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.011"/>
+  <testcase name="[5] email=just”not”right@example.com" classname="com.kinandcarta.ecommerce.AccountsHandlerTest" time="0.01"/>
+  <system-out><![CDATA[10:00:13.770 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
