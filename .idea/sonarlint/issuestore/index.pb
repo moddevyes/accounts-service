@@ -1,3 +1,15 @@
 
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+p
+@src/test/java/com/kinandcarta/ecommerce/AccountsHandlerTest.java,4\6\4654c88d6b45d43f545918dbe22d05af68cca92d
+e
+5src/main/java/com/kinandcarta/ecommerce/Accounts.java,4\0\401f658790e4e8f647736d57f60b8ee160063831
+l
+<src/main/java/com/kinandcarta/ecommerce/AccountsHandler.java,4\d\4dccb426a1897f809d3096a2a499466cea0475c4
+x
+Hsrc/test/java/com/kinandcarta/ecommerce/AccountsWebIntegrationTests.java,7\e\7e41e7045c25a5860cea57ea099213a9c9f67794
+o
+?src/main/java/com/kinandcarta/ecommerce/AccountsController.java,c\e\cedc9b17d119c9eef182bbfe7dc6940c214d4de9
+s
+Csrc/test/java/com/kinandcarta/ecommerce/AccountsControllerTest.java,2\3\23ffa1f5d9fc6746c2e9d19e9ea50ae012ca7df5

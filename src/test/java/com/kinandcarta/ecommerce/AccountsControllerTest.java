@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
@@ -94,6 +94,15 @@ class AccountsControllerTest {
     @Test void shouldNot_UpdateAccount_thatDoesNotExist() {
         when(accountsHandler.update(1L, account)).thenThrow(EntityNotFoundException.class);
         assertThat(controller.update(1L, account).getStatusCode()).isEqualTo(HttpStatusCode.valueOf(400));
+    }
+
+    @Test void shouldDeleteAccounts_withId1() {
+        ResponseEntity<Accounts> createAccountCmd = performCreate_Account_Given();
+        assertThat(createAccountCmd).isNotNull();
+        assertThat(createAccountCmd.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
+        doNothing().when(accountsHandler).delete(1L);
+        controller.delete(1L);
+        verify(accountsHandler, times(1)).delete(1L);
     }
 
     // Helper Methods
