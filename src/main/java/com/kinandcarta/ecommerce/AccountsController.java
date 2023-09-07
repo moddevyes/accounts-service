@@ -1,5 +1,6 @@
 package com.kinandcarta.ecommerce;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -25,6 +27,10 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
         try {
             return new ResponseEntity<>(accountsHandler.create(model), HttpStatus.OK);
         } catch (final Exception e) {
+            if (e instanceof EmailNotValidException) {
+                log.error("::METHOD, create, E-mail invalid Exception.");
+                return ResponseEntity.badRequest().build();
+            }
             log.error("::METHOD, create, exception occured.", e);
             return ResponseEntity.notFound().build();
         }
@@ -38,6 +44,10 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
         try {
             return new ResponseEntity<>(accountsHandler.update(id, model), HttpStatus.OK);
         } catch (final Exception e) {
+            if (e instanceof EntityNotFoundException) {
+                log.error("EntityNotFoundException: Account not updated for ID -> " + id);
+                return ResponseEntity.badRequest().build();
+            }
             log.error("::METHOD, update, exception occured.", e);
             return ResponseEntity.notFound().build();
         }
