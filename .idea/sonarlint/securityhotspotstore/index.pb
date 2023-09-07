@@ -13,3 +13,7 @@ o
 ?src/main/java/com/kinandcarta/ecommerce/AccountsController.java,c\e\cedc9b17d119c9eef182bbfe7dc6940c214d4de9
 s
 Csrc/test/java/com/kinandcarta/ecommerce/AccountsControllerTest.java,2\3\23ffa1f5d9fc6746c2e9d19e9ea50ae012ca7df5
+]
+-.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
