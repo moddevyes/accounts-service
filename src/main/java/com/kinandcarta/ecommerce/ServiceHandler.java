@@ -9,6 +9,7 @@ public interface ServiceHandler extends ServiceAccountsHandler {
     void delete(final Long id);
     Accounts findById(final Long id);
 
+    Accounts findByAccountIdRef(final String id);
     Set<Accounts> findAll();
     
 }

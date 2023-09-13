@@ -201,6 +201,25 @@ class AccountsWebIntegrationTests {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.emailAddress").exists());
 
 	}
+
+	@Test void shouldFindAnAccount_byAccountRefId() throws Exception {
+		when(accountsRepository.findAccountsByAccountRefId(expectedAccountIdRef)).thenReturn(
+				Optional.ofNullable(Accounts.builder()
+						.accountRefId(expectedAccountIdRef)
+						.firstName("DukeFirstName")
+						.lastName("DukeLastName")
+						.emailAddress("dukefirstlast@duke.com").build()));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/accounts/{id}/reference", expectedAccountIdRef)
+						.accept(MediaType.APPLICATION_JSON)
+						.contentType(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.emailAddress").exists());
+	}
+
 	@Test void shouldFind_AllAccounts() throws Exception {
 		when(accountsRepository.findAll()).thenReturn(
 				List.of(Accounts.builder()

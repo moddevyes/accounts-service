@@ -11,6 +11,7 @@ public interface CrudUseCase<T> {
     void delete(final Long id);
     ResponseEntity<T> findById(final Long id);
 
+    ResponseEntity<Accounts> findByAccountIdRef(final String id);
     ResponseEntity<Set<T>> findAll();
 
 }

@@ -66,7 +66,7 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
         try {
             accountsHandler.delete(id);
         } catch (final Exception e) {
-            log.error("::METHOD, delete, exception occured.", e);
+            log.error("::METHOD, delete, exception occurred.", e);
         }
     }
 
@@ -76,10 +76,22 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
         try {
             return new ResponseEntity<>(accountsHandler.findById(id), HttpStatus.OK);
         } catch (final Exception e) {
-            log.error("::METHOD, findById, exception occured.", e);
+            log.error("::METHOD, findById, exception occurred.", e);
             return ResponseEntity.notFound().build();
         }
     }
+
+    @Override
+    @GetMapping(value = "/accounts/{id}/reference", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Accounts> findByAccountIdRef(@PathVariable("id") @NotNull final String id) {
+        try {
+            return new ResponseEntity<>(accountsHandler.findByAccountIdRef(id), HttpStatus.OK);
+        } catch (final Exception e) {
+            log.error("::METHOD, findByAccountIdRef, exception occurred.", e);
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @GetMapping(value = "/accounts", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
@@ -87,7 +99,7 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
         try {
         return new ResponseEntity<>(accountsHandler.findAll(), HttpStatus.OK);
         } catch (final Exception e) {
-            log.error("::METHOD, findAll, exception occured.", e);
+            log.error("::METHOD, findAll, exception occurred.", e);
             return ResponseEntity.notFound().build();
         }
     }
@@ -98,7 +110,7 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
         try {
             return new ResponseEntity<>(accountsHandler.findAllAddressesForAccount(id), HttpStatus.OK);
         } catch (final Exception e) {
-            log.error("::METHOD, findAllAddressesForAccount, exception occured.", e);
+            log.error("::METHOD, findAllAddressesForAccount, exception occurred.", e);
             return ResponseEntity.notFound().build();
         }
     }
