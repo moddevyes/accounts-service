@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class AccountsHandlerTest {
-
+    final String expectedAccountIdRef = "4f464483-a1f0-4ce9-a19e-3c0f23e84a67";
     AccountsRepository accountsRepository = Mockito.mock(AccountsRepository.class);
 
     AccountsHandler accountsHandler;
@@ -48,6 +48,7 @@ class AccountsHandlerTest {
             .country("US").build();
     Accounts account = Accounts.builder()
             .id(1L)
+            .accountRefId(expectedAccountIdRef)
             .firstName("Minimal")
             .lastName("CreateAccount")
             .emailAddress("dukefirst.last@enjoy.com")
@@ -56,6 +57,7 @@ class AccountsHandlerTest {
 
     Accounts accountMultipleAddresses = Accounts.builder()
             .id(1L)
+            .accountRefId(expectedAccountIdRef)
             .firstName("Minimal")
             .lastName("CreateAccount")
             .emailAddress("dukefirst.last@enjoy.com")
@@ -79,6 +81,7 @@ class AccountsHandlerTest {
 
         Accounts account = Accounts.builder()
                 .id(100L)
+                .accountRefId(expectedAccountIdRef)
                 .firstName("DukeFirstName")
                 .lastName("DukeLastName")
                 .emailAddress(email)
@@ -126,6 +129,7 @@ class AccountsHandlerTest {
         Accounts accountCreated = accountsHandler.create(account);
         assertThat(accountCreated).isNotNull()
                 .hasFieldOrPropertyWithValue("id", 1L)
+                .hasFieldOrPropertyWithValue("accountRefId", expectedAccountIdRef)
                 .hasFieldOrPropertyWithValue("firstName", "Minimal")
                 .hasFieldOrPropertyWithValue("lastName", "CreateAccount")
                 .hasFieldOrPropertyWithValue("emailAddress", "dukefirst.last@enjoy.com");

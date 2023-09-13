@@ -18,6 +18,7 @@ import static org.mockito.Mockito.*;
 @Slf4j
 @ExtendWith(MockitoExtension.class)
 class AccountsControllerTest {
+    final String expectedAccountIdRef = "4f464483-a1f0-4ce9-a19e-3c0f23e84a67";
 
     Address address = Address.builder().id(100L)
             .address1("100")
@@ -29,6 +30,7 @@ class AccountsControllerTest {
             .country("US").build();
     Accounts account = Accounts.builder()
             .id(1L)
+            .accountRefId(expectedAccountIdRef)
             .firstName("Minimal")
             .lastName("CreateAccount")
             .emailAddress("dukefirst.last@enjoy.com")
@@ -38,6 +40,7 @@ class AccountsControllerTest {
     final String emailAddress = "あいうえお@example.com";
     Accounts accountEmailSpace = Accounts.builder()
             .id(1L)
+            .accountRefId(expectedAccountIdRef)
             .firstName("Email")
             .lastName("Space")
             .emailAddress(emailAddress)
