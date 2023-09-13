@@ -29,7 +29,7 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
         try {
             if (model == null) return ResponseEntity.badRequest().build();
 
-            final Accounts accountsToPersist = toAccounts(model);
+            model.setAccountRefId(limitTo255Length(UUID.randomUUID().toString()));
 
             return new ResponseEntity<>(accountsHandler.create(model), HttpStatus.OK);
         } catch (final Exception e) {

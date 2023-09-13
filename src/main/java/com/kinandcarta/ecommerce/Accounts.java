@@ -52,7 +52,7 @@ public class Accounts {
     @Column(columnDefinition = "varchar(200) default ''", nullable = false, unique = true)
     private String emailAddress;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<Address> addresses;
 

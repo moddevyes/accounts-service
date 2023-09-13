@@ -43,7 +43,12 @@ public class AccountsHandler implements ServiceHandler {
             accountsFound.get().setFirstName(model.getFirstName());
             accountsFound.get().setLastName(model.getLastName());
             accountsFound.get().setEmailAddress(model.getEmailAddress());
-            accountsFound.get().setAddresses(new HashSet<>(model.getAddresses() != null ? model.getAddresses() : new HashSet<>()));
+
+            if (accountsFound.get().getAddresses().isEmpty()) {
+                accountsFound.get().setAddresses(new HashSet<>());
+            } else {
+                accountsFound.get().setAddresses(model.getAddresses());
+            }
             repository.save(accountsFound.get());
         } else {
             throw new EntityNotFoundException("Account not updated for ID -> " + id);

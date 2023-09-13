@@ -111,20 +111,66 @@ class AccountsWebIntegrationTests {
 
 	}
 	@Test void shouldUpdateAnAccount() throws Exception {
-		final String json = mapper.writeValueAsString(Accounts.builder()
+		Accounts account = Accounts.builder()
 				.id(20L)
 				.accountRefId(expectedAccountIdRef)
 				.firstName("DukeFirstName")
 				.lastName("DukeLastName")
-				.emailAddress("dukefirstlast@duke.com").build());
+				.emailAddress("dukefirstlast@duke.com").addresses(
+						Set.of(
+								Address.builder()
+										.id(100L)
+										.address1("100 Noworries Avenue")
+										.address2("Suite #100")
+										.city("Food Forest City")
+										.state("FL")
+										.province("")
+										.postalCode("33000")
+										.country("US").build(),
+								Address.builder()
+										.id(105L)
+										.address1("105 Ood Nutrients Drive")
+										.address2("Suite #105")
+										.city("Ood City")
+										.state("FL")
+										.province("")
+										.postalCode("33000")
+										.country("US").build()
+						)
+				).build();
+
+		when(accountsRepository.save(account)).thenReturn(account);
+
+		final String json = mapper.writeValueAsString(account);
 
 		when(accountsRepository.findById(20L)).thenReturn(
                 Optional.ofNullable(Accounts.builder()
-                        .id(20L)
+						.id(20L)
 						.accountRefId(expectedAccountIdRef)
-                        .firstName("Updated Firstname")
-                        .lastName("Updated Lastname")
-                        .emailAddress("updatedfirstlast@duke.com").build()));
+						.firstName("UpdatedFirstName")
+						.lastName("UpdatedLastName")
+						.emailAddress("updatedfirst.last@duke.com").addresses(
+								Set.of(
+										Address.builder()
+												.id(100L)
+												.address1("100 Noworries Avenue")
+												.address2("Suite #100")
+												.city("Food Forest City")
+												.state("FL")
+												.province("")
+												.postalCode("33000")
+												.country("US").build(),
+										Address.builder()
+												.id(105L)
+												.address1("105 Ood Nutrients Drive")
+												.address2("Suite #105")
+												.city("Ood City")
+												.state("FL")
+												.province("")
+												.postalCode("33000")
+												.country("US").build()
+								)
+						).build()));
 
 		mockMvc.perform(MockMvcRequestBuilders.put("/accounts/{id}", 20L)
 				.accept(MediaType.APPLICATION_JSON)
