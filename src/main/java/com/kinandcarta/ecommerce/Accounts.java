@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -30,6 +31,11 @@ public class Accounts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NaturalId
+    @NotNull
+    @Size(min = 6, max = 255, message = "Account reference ID must be between 6 and 255 characters")
+    private String accountRefId;
+
     @NotNull
     @Size(min = 2, max = 200, message = "First Name must be between 2 and 200 characters")
     @Column(columnDefinition = "varchar(200) default ''", nullable = false)
@@ -46,7 +52,7 @@ public class Accounts {
     @Column(columnDefinition = "varchar(200) default ''", nullable = false, unique = true)
     private String emailAddress;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     private Set<Address> addresses;
 

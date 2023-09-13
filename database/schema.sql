@@ -1,3 +1,5 @@
+-- noinspection SqlNoDataSourceInspectionForFile
+
 create schema ecommerce_accounts_db;
 use ecommerce_accounts_db;
 
@@ -17,12 +19,13 @@ CREATE TABLE address
 
 CREATE TABLE accounts
 (
-    id            BIGINT AUTO_INCREMENT   NOT NULL,
-    first_name    VARCHAR(200) DEFAULT '' NOT NULL,
-    last_name     VARCHAR(200) DEFAULT '' NOT NULL,
-    email_address VARCHAR(200) DEFAULT '' NOT NULL,
-    created_dt    datetime                NULL,
-    updated_dt    datetime                NULL,
+    id             BIGINT AUTO_INCREMENT   NOT NULL,
+    first_name     VARCHAR(200) DEFAULT '' NOT NULL,
+    last_name      VARCHAR(200) DEFAULT '' NOT NULL,
+    email_address  VARCHAR(200) DEFAULT '' NOT NULL,
+    account_ref_id VARCHAR(255) NOT NULL   DEFAULT '',
+    created_dt     datetime                NULL,
+    updated_dt     datetime                NULL,
     CONSTRAINT pk_accounts PRIMARY KEY (id)
 );
 

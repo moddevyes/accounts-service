@@ -17,8 +17,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class AccountsHandlerTest {
-
+    final String expectedAccountIdRef = "4f464483-a1f0-4ce9-a19e-3c0f23e84a67";
     AccountsRepository accountsRepository = Mockito.mock(AccountsRepository.class);
+
+    AddressRepository addressRepository = Mockito.mock(AddressRepository.class);
 
     AccountsHandler accountsHandler;
 
@@ -48,6 +50,7 @@ class AccountsHandlerTest {
             .country("US").build();
     Accounts account = Accounts.builder()
             .id(1L)
+            .accountRefId(expectedAccountIdRef)
             .firstName("Minimal")
             .lastName("CreateAccount")
             .emailAddress("dukefirst.last@enjoy.com")
@@ -56,6 +59,7 @@ class AccountsHandlerTest {
 
     Accounts accountMultipleAddresses = Accounts.builder()
             .id(1L)
+            .accountRefId(expectedAccountIdRef)
             .firstName("Minimal")
             .lastName("CreateAccount")
             .emailAddress("dukefirst.last@enjoy.com")
@@ -79,6 +83,7 @@ class AccountsHandlerTest {
 
         Accounts account = Accounts.builder()
                 .id(100L)
+                .accountRefId(expectedAccountIdRef)
                 .firstName("DukeFirstName")
                 .lastName("DukeLastName")
                 .emailAddress(email)
@@ -126,6 +131,7 @@ class AccountsHandlerTest {
         Accounts accountCreated = accountsHandler.create(account);
         assertThat(accountCreated).isNotNull()
                 .hasFieldOrPropertyWithValue("id", 1L)
+                .hasFieldOrPropertyWithValue("accountRefId", expectedAccountIdRef)
                 .hasFieldOrPropertyWithValue("firstName", "Minimal")
                 .hasFieldOrPropertyWithValue("lastName", "CreateAccount")
                 .hasFieldOrPropertyWithValue("emailAddress", "dukefirst.last@enjoy.com");
@@ -154,6 +160,32 @@ class AccountsHandlerTest {
                 .thenReturn(Optional.ofNullable(accountMultipleAddresses));
         Set<Address> allAccountAddresses = accountsHandler.findAllAddressesForAccount(1L);
         assertThat(allAccountAddresses).isNotNull().hasSize(3);
+    }
+
+    @Test
+    void shouldUpdateTheAddresses_forGivenAccount() {
+        when(accountsRepository.findById(100L)).thenReturn(Optional.ofNullable(account));
+        when(addressRepository.findById(100L)).thenReturn(Optional.ofNullable(address));
+        // Okay account 100L has address -> 100L, update the address
+        Accounts foundAccount100L = accountsHandler.update(100L, account);
+        assertThat(foundAccount100L).isEqualTo(account);
+        assertThat(foundAccount100L.getAddresses()).hasSize(1);
+        assertThat(foundAccount100L.getAddresses().stream().findFirst()).contains(address);
+        Address updateAddress = foundAccount100L.getAddresses().stream().findFirst().get();
+        /*
+        Current Address:
+        .id(100L)
+            .address1("100")
+            .address2("")
+            .city("Food Forest City")
+            .state("FL")
+            .province("")
+            .postalCode("33000")
+            .country("US").build();
+         */
+        updateAddress.setAddress1("1001 SpringBoot Address Lane");
+        updateAddress.setAddress2("Suite 1001");
+        assertThat(address).isEqualTo(updateAddress);
     }
 
     @Test

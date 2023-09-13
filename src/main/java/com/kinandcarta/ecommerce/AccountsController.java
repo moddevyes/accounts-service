@@ -8,11 +8,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @Slf4j
 public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCase{
+    private static final int LENGTH_LIMIT_FOR_STRING = 255;
     final
     AccountsHandler accountsHandler;
 
@@ -24,6 +27,10 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
     @PostMapping(value = "/accounts", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Accounts> create(@RequestBody final Accounts model) {
         try {
+            if (model == null) return ResponseEntity.badRequest().build();
+
+            model.setAccountRefId(limitTo255Length(UUID.randomUUID().toString()));
+
             return new ResponseEntity<>(accountsHandler.create(model), HttpStatus.OK);
         } catch (final Exception e) {
             if (e instanceof EmailNotValidException) {
@@ -94,5 +101,36 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
             log.error("::METHOD, findAllAddressesForAccount, exception occured.", e);
             return ResponseEntity.notFound().build();
         }
+    }
+
+    // Helper methods
+    private Accounts toAccounts(final Accounts account) {
+        Objects.requireNonNull(account, "AccountServiceClient, null Account");
+        Objects.requireNonNull(account, "AccountServiceClient, null Account-> First name");
+        Objects.requireNonNull(account, "AccountServiceClient, null Account-> Last name");
+        Objects.requireNonNull(account, "AccountServiceClient, null Account-> Email address");
+        Objects.requireNonNull(account, "AccountServiceClient, null Account-> Addresses");
+
+        if (account.getAddresses().isEmpty()) {
+            throw new IllegalArgumentException("AccountServiceClient, at least ONE address is required");
+        }
+
+        return Accounts.builder()
+                .id(account.getId())
+                .accountRefId(limitTo255Length(UUID.randomUUID().toString()))
+                .accountRefId(account.getAccountRefId())
+                .firstName(account.getFirstName())
+                .lastName(account.getLastName())
+                .emailAddress(account.getEmailAddress())
+                .addresses(account.getAddresses()).build();
+    }
+
+    private String limitTo255Length(final String data) {
+        Objects.requireNonNull(data, "limitTo255Length, input null or missing.");
+        if (data.length() > LENGTH_LIMIT_FOR_STRING) {
+            return data.substring(0,255);
+        }
+
+        return data;
     }
 }
