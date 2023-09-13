@@ -89,6 +89,12 @@ class AccountsControllerTest {
                 .hasFieldOrPropertyWithValue("lastName","CreateAccount")
                 .hasFieldOrPropertyWithValue("emailAddress","dukefirst.last@enjoy.com");
     }
+
+    @Test void should_FindAccountByRefId() {
+        ResponseEntity<Accounts> findOneAccountByRefIdCommand = performFindOne_Account_ByRefId_Given(expectedAccountIdRef);
+        assertThat(findOneAccountByRefIdCommand).isNotNull();
+    }
+
     @Test void should_UpdateExisting_Account() {
         Accounts updatingThisAccount = performUpdate_Account_Given(1L);
         updatingThisAccount.setEmailAddress("updatedemail@test.com");
@@ -128,6 +134,12 @@ class AccountsControllerTest {
         return controller.findById(accountId);
     }
 
+    private ResponseEntity<Accounts> performFindOne_Account_ByRefId_Given(final String accountRefId) {
+        assertAccountId(accountRefId);
+        when(accountsHandler.findByAccountIdRef(accountRefId)).thenReturn(account);
+        return controller.findByAccountIdRef(accountRefId);
+    }
+
     private Accounts performUpdate_Account_Given(final Long accountId) {
         assertAccountId(accountId);
         when(accountsHandler.update(accountId, account)).thenReturn(account);
@@ -139,5 +151,8 @@ class AccountsControllerTest {
 
     private void assertAccountId(final Long id) {
         if (id != 1L) throw new IllegalArgumentException("Invalid account id");
+    }
+    private void assertAccountId(final String id) {
+        if (id == null) throw new IllegalArgumentException("Invalid account id reference");
     }
 }

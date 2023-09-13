@@ -90,4 +90,9 @@ public class AccountsHandler implements ServiceHandler {
         }
         return violations.stream().findFirst().isPresent();
     }
+
+    public Accounts findByAccountIdRef(final String id) {
+        log.debug("findByAccountIdRef: id -> " + id);
+        return repository.findAccountsByAccountRefId(id).orElseThrow(EntityNotFoundException::new);
+    }
 }

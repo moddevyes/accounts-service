@@ -195,4 +195,12 @@ class AccountsHandlerTest {
         Accounts accountFoundWithId2 = accountsHandler.findById(2L);
         assertThat(accountFoundWithId2).isNotNull();
     }
+
+    @Test
+    void shouldFindOne_Account_ByRefId() {
+        when(accountsRepository.findAccountsByAccountRefId(expectedAccountIdRef))
+                .thenReturn(Optional.ofNullable(accountMultipleAddresses));
+        Accounts accountsFound = accountsHandler.findByAccountIdRef(expectedAccountIdRef);
+        assertThat(accountsFound).isNotNull();
+    }
 }
