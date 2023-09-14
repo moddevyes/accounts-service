@@ -1,8 +1,7 @@
 FROM eclipse-temurin:17-jdk-alpine
-VOLUME /tmp
+WORKDIR /opt/commerceapps
 EXPOSE 8001
 ARG JAR_FILE=build/libs/accounts-service-0.0.1.jar
-ARG JAR_FILE
 COPY ${JAR_FILE} accounts-service-0.0.1.jar
 ENTRYPOINT ["java","-jar","accounts-service-0.0.1.jar"]
 
