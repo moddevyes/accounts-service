@@ -1,13 +1,12 @@
 FROM eclipse-temurin:17-jdk-alpine
-WORKDIR /opt/commerceapps
 EXPOSE 8001
+RUN mkdir /opt/commerceapps
 ARG JAR_FILE=build/libs/accounts-service-0.0.1.jar
-COPY ${JAR_FILE} accounts-service-0.0.1.jar
-ENTRYPOINT ["java","-jar","accounts-service-0.0.1.jar"]
-
+COPY ${JAR_FILE} /opt/commerceapps/accounts-service-0.0.1.jar
+ENTRYPOINT ["java","-jar","/opt/commerceapps/accounts-service-0.0.1.jar"]
 
 # BUILD
-# docker build -t accounts-service:latest .
+# docker build -t accounts-service .
 
 # IMAGE built and in docker
 
@@ -19,7 +18,7 @@ ENTRYPOINT ["java","-jar","accounts-service-0.0.1.jar"]
 # docker network create shipments-netw
 
 # RUN the container
-# docker run -p8001:8001 accounts-service:latest
+# docker run -p8001:8001 accounts-service --network commercenetwork
 
 # INSPECT
 # docker inspect message-server
