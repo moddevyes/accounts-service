@@ -2,7 +2,7 @@ spring:
   application:
     name: accounts-service
   datasource:
-    url: jdbc:mysql://localhost:3301/ecommerce_accounts_db?&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${mysqldocker.accounts.container.name:localhost}:3301/ecommerce_accounts_db?&useSSL=false&allowPublicKeyRetrieval=true
     username: ${SPRING_DATASOURCE_USERNAME:davidking}
     password: ${SPRING_DATASOURCE_PASSWORD:davidking!!}
   jpa:
@@ -17,9 +17,24 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://${eureka.instance.hostname:localhost}:8761/eureka/
   instance:
-    statusPageUrl: https://${eureka.hostname}/info
-    healthCheckUrl: https://${eureka.hostname}/health
-    homePageUrl: https://${eureka.hostname}/
+    statusPageUrl: https://${eureka.instance.hostname:localhost}/info
+    healthCheckUrl: https://${eureka.instance.hostname:localhost}/health
+    homePageUrl: https://${eureka.instance.hostname:localhost}/
     appname: accounts-service
+
+# docker custom variables
+mysqldocker:
+  accounts:
+    container:
+      name: accounts_mysql_container
+  orders:
+    container:
+      name: orders_mysql_container
+  products:
+    container:
+      name: products_mysql_container
+  shipments:
+    container:
+      name: shipments_mysql_container
