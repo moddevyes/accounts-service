@@ -47,6 +47,8 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
     @Override
     @PutMapping(value = "/accounts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Accounts> update(@PathVariable("id") @NotNull final Long id, @RequestBody final Accounts model) {
+        Objects.requireNonNull(id, "ID not provided for, update");
+        log.debug("update  for id - " + id);
         try {
             return new ResponseEntity<>(accountsHandler.update(id, model), HttpStatus.OK);
         } catch (final Exception e) {
@@ -63,6 +65,8 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
     @ResponseStatus(HttpStatus.ACCEPTED)
     @DeleteMapping(value = "/accounts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void delete(@PathVariable("id") @NotNull final Long id) {
+        Objects.requireNonNull(id, "ID not provided for, delete");
+        log.debug("delete  for id - " + id);
         try {
             accountsHandler.delete(id);
         } catch (final Exception e) {
@@ -73,6 +77,8 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
     @Override
     @GetMapping(value = "/accounts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Accounts> findById(@PathVariable("id") @NotNull final Long id) {
+        Objects.requireNonNull(id, "ID not provided for, findById");
+        log.debug("findById  for id - " + id);
         try {
             return new ResponseEntity<>(accountsHandler.findById(id), HttpStatus.OK);
         } catch (final Exception e) {
@@ -84,6 +90,8 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
     @Override
     @GetMapping(value = "/accounts/{id}/reference", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Accounts> findByAccountIdRef(@PathVariable("id") @NotNull final String id) {
+        Objects.requireNonNull(id, "ID not provided for, findByAccountIdRef");
+        log.debug("findByAccountIdRef  for id - " + id);
         try {
             return new ResponseEntity<>(accountsHandler.findByAccountIdRef(id), HttpStatus.OK);
         } catch (final Exception e) {
@@ -96,6 +104,7 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
     @GetMapping(value = "/accounts", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<Set<Accounts>> findAll() {
+        log.debug("findAll...");
         try {
         return new ResponseEntity<>(accountsHandler.findAll(), HttpStatus.OK);
         } catch (final Exception e) {
@@ -107,6 +116,8 @@ public class AccountsController implements CrudUseCase<Accounts>, AccountsUseCas
     @Override
     @GetMapping(value = "/accounts/{id}/addresses", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Set<Address>> findAllAddressesForAccount(@PathVariable("id") @NotNull final Long id) {
+        Objects.requireNonNull(id, "ID not provided for, findAllAddressesForAccount");
+        log.debug("findAllAddressesForAccount  for id - " + id);
         try {
             return new ResponseEntity<>(accountsHandler.findAllAddressesForAccount(id), HttpStatus.OK);
         } catch (final Exception e) {
